@@ -26,7 +26,7 @@ STR = '''<doc id="%s">
 def change2XML(inname, outfile):
     news_file = open(inname, 'r')
     js = json.load(news_file)
-    newid = js["newsId"]
+    newid = js["date"]+"-"+js["newsId"]
     source = js["source"]
     date = parse(js["date"]).date()
     link = js["contents"]["link"]
