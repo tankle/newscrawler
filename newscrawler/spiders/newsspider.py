@@ -79,3 +79,27 @@ class TencentNewsSpider(CrawlSpider):
  
         item['contents']['passage'] = ListCombiner(sel.xpath('//p/text()').extract())
         return item
+
+class NeteaseNewsSpider(CrawlSpider):
+    name = 'sohu_news_spider'
+    allowed_domains = ['sohu.com']
+    start_urls = ['http://www.sohu.com']
+    url_pattern = r'(http://.*?\.sohu\.com)/(\d{8})/(\w+)\.shtml'
+    rules = [Rule(LxmlLinkExtractor(allow=[url_pattern]), 'parse_news', follow=True)]
+
+    def parse_news(self, response):
+        sel = Selector(response)
+        pattern = re.match(self.url_pattern, str(response.url))
+
+        item = NewsItem()
+        item['source'] = 'www.sohu.com' # pattern.group(1)
+        item['date'] = pattern.group(2)
+        item['newsId'] = pattern.group(3)
+        item['contents'] = {'link':str(response.url), 'title':u'', 'passage':u''}
+        title = sel.xpath("//h1[@itemprop='headline']/text()").extract()
+        if len(title) == 0:
+            return None
+        item['contents']['title'] = title[0]
+        item['contents']['passage'] = ListCombiner(sel.xpath('//div[@id="contentText"]/p/text()').extract())
+        return item
+
