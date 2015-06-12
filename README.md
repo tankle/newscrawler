@@ -1,4 +1,6 @@
 # newscrawler
+
+[![Join the chat at https://gitter.im/tankle/newscrawler](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tankle/newscrawler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 新闻网站爬虫,目前能够爬取网易，新浪，qq, sohu等三家网站的新闻页面。
 
 
